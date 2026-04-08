@@ -1,7 +1,7 @@
 # simple-agent
 
 A minimal LLM agent built on [LangChain Deep Agents](https://github.com/langchain-ai/deepagents). Supports OpenAI, Anthropic, and Google models out of the box. Two ways to run it — pick one:
-
+ 
 - [CLI guide](docs/cli.md) — interactive terminal chat
 - [Fullstack guide](docs/fullstack.md) — FastAPI server + React frontend
 
