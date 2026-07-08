@@ -1,0 +1,55 @@
+# Enumeration & counting: exact counts backed by exhaustive catalog results.
+# Ground truth pulled from the corpus itself (documents = revisions on disk,
+# doc_ids = logical documents). Layer 1 checks search_catalog counts exactly.
+
+- id: ecr-count
+  query: "How many engineering change requests are in the system?"
+  filter: {doc_type: ECR}
+  expect:
+    count: 3
+    doc_ids: [ECR-577, ECR-587, ECR-593]
+  expect_answer:
+    answer_contains: ["3", "ECR-577", "ECR-587", "ECR-593"]
+
+- id: bom-count
+  query: "How many bills of materials do we have?"
+  filter: {doc_type: BOM}
+  expect:
+    count: 3
+    doc_ids: [BOM-055, BOM-079, BOM-101]
+
+- id: vvpr-count
+  query: "How many verification protocols do we have?"
+  filter: {doc_type: VVPR}
+  expect:
+    count: 91
+
+- id: risk-docs-count
+  query: "Show me all risk documents"
+  filter: {doc_type: RSK}
+  expect:
+    count: 7
+
+# NOTE: first ground-truth guess was 4 (multi-rev chains only); the tool found
+# 11 — obsolete singletons count too. Verified by hand; the eval was wrong.
+- id: obsolete-without-replacement
+  query: "Which documents are obsolete with no current version?"
+  filter: {status: obsolete}
+  expect:
+    count: 11
+    doc_ids: [ESF-P01-003, MEMO-P01-699, MEMO-P01-776, MEMO-P01-777,
+              PLN-P01-058, RSK-P01-010, RSK-P01-011, RSK-P01-012,
+              TRA-024, VVPR-P01-173, VVPR-SWV-032]
+
+- id: empty-docs-inventory
+  query: "Which documents are empty placeholders?"
+  filter: {status: empty}
+  expect:
+    doc_ids_include: [IFU-MX1, VVPR-P01-214]
+
+- id: version-scoped-v300
+  query: "What did we test for software v3.0.0?"
+  filter: {sw_version: "3.0.0"}   # deliberately missing the 'v' — normalized
+  expect:
+    count: 12
+    doc_ids_include: [VVPR-P01-175, MEMO-P01-636]

@@ -1,0 +1,70 @@
+# Known-item retrieval: the user knows a document exists and wants to find it.
+# Layer 1 checks: expected doc_id appears in search_catalog's top results;
+# latest_current_revision matches when specified.
+
+- id: bom-by-name
+  query: "Bill of Materials for the MX1 system"
+  expect:
+    doc_ids: [BOM-055]
+    latest_current_revision: G
+
+- id: bom-typo
+  query: "bill of materails for MX1"
+  expect:
+    doc_ids: [BOM-055]
+
+- id: id-loose-format
+  query: "vvpr 151"
+  expect:
+    doc_ids: [VVPR-P01-151]
+
+- id: id-lowercase-dashes
+  query: "vvpr-p01-162"
+  expect:
+    doc_ids: [VVPR-P01-162]
+
+- id: id-embedded-in-sentence
+  query: "can you find VVPR-P01-151 for me"
+  expect:
+    doc_ids: [VVPR-P01-151]
+
+- id: ifu-by-name
+  query: "instructions for use"
+  expect:
+    doc_ids: [IFU-MX1]
+    all_revisions_empty: true   # both revs are empty files — "exists but empty"
+
+- id: srs-is-a-memo
+  query: "software requirement specifications"
+  expect:
+    doc_ids: [MEMO-P01-630]     # the MEMO junk-drawer case
+    latest_current_revision: H
+
+- id: risk-management-plan
+  query: "risk management plan"
+  expect:
+    doc_ids: [PLN-P01-063]
+
+- id: dielectric-report-by-name
+  query: "dielectric and leakage summary report"
+  expect:
+    doc_ids: [3P-P01-33]
+
+- id: nonexistent-510k
+  query: "510(k) summary"
+  expect:
+    none: true                  # honest not-found beats a confident wrong answer
+
+- id: nonexistent-510k-agent
+  query: "Where is the 510(k) summary for the device?"
+  expect_answer:
+    rubric: >
+      The answer clearly states the 510(k) summary was not found in the
+      corpus (optionally suggesting closest matches), rather than claiming
+      or implying such a document exists.
+
+- id: risk-assessment-all-obsolete
+  query: "MX1 risk assessment"
+  expect:
+    doc_ids: [RSK-P01-010]
+    no_current_revision: true   # every revision of RSK-P01-010 is obsolete
