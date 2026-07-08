@@ -12,11 +12,16 @@ dependencies = [
     "python-dotenv",
     "fastapi",
     "uvicorn[standard]",
+    "python-docx",
+    "pyyaml",
+    "numpy",
+    "rapidfuzz",
 ]
 
 [project.scripts]
 chat = "agent.cli:main"
 serve = "agent.server:main"
+index = "agent.ingest.pipeline:main"
 
 [dependency-groups]
 dev = [
@@ -25,7 +30,7 @@ dev = [
 ]
 
 [tool.pytest.ini_options]
-testpaths = ["evals"]
+testpaths = ["evals", "tests"]
 
 [build-system]
 requires = ["hatchling"]
