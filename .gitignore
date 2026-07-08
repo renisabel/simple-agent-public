@@ -17,6 +17,9 @@ build/
 # OS
 .DS_Store
 
+# Corpus and generated indexes
+data/
+
 # uv
 uv.lock
 
