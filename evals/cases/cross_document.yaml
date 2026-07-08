@@ -1,0 +1,23 @@
+# Cross-document analysis: follow reference chains across the corpus.
+
+- id: trace-matrix-citers
+  query: "Which documents reference the verification and validation trace matrix?"
+  expect_answer:
+    # Subset of the true inbound set (refs table ground truth).
+    answer_contains: ["DHF-008", "RSK-P01-013"]
+    require_citations: true
+
+- id: ecr-affected-boms
+  query: "Which BOMs does ECR-593 affect?"
+  expect_answer:
+    answer_contains: ["BOM-055"]
+    require_citations: true
+
+- id: protocols-tracing-to-risk
+  query: "Which verification protocols trace back to the risk analysis?"
+  expect_answer:
+    require_citations: true
+    rubric: >
+      The answer lists specific VVPR protocols with citations and connects
+      them to specific risk documents (RSK-*), rather than giving a generic
+      description of traceability.

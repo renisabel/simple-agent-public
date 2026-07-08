@@ -1,0 +1,17 @@
+# Exploratory search: survey what's available on a topic.
+# Layer 2 (agent) cases: expect_answer blocks are checked against the full
+# agent's answer; citations parsed and validated mechanically.
+
+- id: verification-protocols-survey
+  query: "What verification test protocols do we have for the MX1?"
+  expect_answer:
+    answer_contains: ["91"]     # exact catalog count, not an estimate
+    require_citations: true
+
+- id: risk-docs-survey
+  query: "Show me all risk-related documents"
+  expect_answer:
+    # Must catch risk docs BEYOND the RSK type prefix (the risk management
+    # plan is a PLN) — proves type filters aren't trusted blindly.
+    answer_contains: ["RSK-P01-013", "PLN-P01-063"]
+    require_citations: true

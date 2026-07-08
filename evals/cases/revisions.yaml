@@ -1,0 +1,21 @@
+# Revision & change tracking: chains, diffs, ECR linkage.
+
+- id: ifu-revisions-empty-honesty
+  query: "What revisions of the Instructions for Use exist?"
+  expect_answer:
+    # Both IFU revisions are empty files — the answer must say so, not
+    # pretend the content is available (and not say "not found").
+    answer_contains: ["IFU-MX1", "empty"]
+
+- id: bom55-rev-g-ecr
+  query: "Which engineering change request introduced Rev G of BOM-055?"
+  expect_answer:
+    answer_contains: ["ECR-593"]
+    require_citations: true
+
+- id: risk-analysis-all-obsolete
+  query: "What is the latest revision of the MX1 Risk Assessment?"
+  expect_answer:
+    # Every revision of RSK-P01-010 is obsolete: the honest answer surfaces
+    # that instead of silently returning Rev E.
+    answer_contains: ["RSK-P01-010", "obsolete"]

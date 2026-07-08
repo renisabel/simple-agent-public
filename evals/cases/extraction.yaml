@@ -1,0 +1,25 @@
+# Content extraction: pull specific information out of documents, cited.
+
+- id: battery-life-criteria
+  query: "What are the acceptance criteria in the MX1 battery life test protocol?"
+  expect_answer:
+    must_cite: [VVPR-P01-162]
+    require_citations: true
+
+- id: hvl-criteria
+  query: "What are the acceptance criteria for the half value layer verification?"
+  expect_answer:
+    must_cite: [VVPR-P01-151]
+    require_citations: true
+
+- id: electrical-safety-honest-gap
+  query: "What are the acceptance criteria for the electrical safety verification test?"
+  expect_answer:
+    # The corpus contains the pass/fail summary, not the numeric IEC limits.
+    # A good answer cites what exists and names the gap; a bad one invents
+    # numbers or searches forever.
+    must_cite: [3P-P01-33]
+    rubric: >
+      The answer cites the dielectric/leakage summary report and honestly
+      states that the specific numeric limits live in the IEC 60601-1
+      standard rather than fabricating numeric acceptance limits.

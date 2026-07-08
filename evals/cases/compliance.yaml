@@ -1,0 +1,13 @@
+# Compliance cross-reference: internal docs vs regulatory requirements.
+
+- id: dhf-820-30-coverage
+  query: "Does our Design History File include everything required by FDA 21 CFR 820.30?"
+  expect_answer:
+    must_cite: [DHF-008]
+    require_citations: true
+    rubric: >
+      The answer examines the Design History File against design-control
+      elements (planning, inputs, outputs, review, verification, validation,
+      transfer, changes), cites specific internal documents per element, and
+      explicitly identifies any element it could not find evidence for —
+      rather than a generic yes/no.
